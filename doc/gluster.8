@@ -1,0 +1,171 @@
+.\"  Copyright (c) 2006-2011 Gluster, Inc. <http://www.gluster.com>
+.\"  This file is part of GlusterFS.
+.\"
+.\"  GlusterFS is free software; you can redistribute it and/or modify
+.\"  it under the terms of the GNU General Public License as published
+.\"  by the Free Software Foundation; either version 3 of the License,
+.\"  or (at your option) any later version.
+.\"
+.\"  GlusterFS is distributed in the hope that it will be useful, but
+.\"  WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\"  General Public License for more details.
+.\"
+.\"  You should have received a copy of the GNU General Public License
+.\"  along with this program.  If not, see " <http://www.gnu.org/licenses/>.
+.\"
+.\"
+.TH Gluster 8 "Gluster command line utility" "07 March 2011" "Gluster Inc."
+.SH NAME
+gluster - Gluster Console Manager (command line utility)
+.SH SYNOPSIS
+.B gluster
+.PP
+To run the program and display gluster prompt:
+.PP
+.B gluster
+.PP
+(or)
+.PP
+To specify a command directly:
+.PP
+.B gluster
+.I [commands] [options]
+
+.SH DESCRIPTION
+The Gluster Console Manager is a command line utility for elastic volume management. You can run the gluster command on any export server. The command enables administrators to perform cloud operations, such as creating, expanding, shrinking, rebalancing, and migrating volumes without needing to schedule server downtime.
+.SH COMMANDS
+
+.SS "Basic Volume Commands"
+.PP
+.TP
+
+\fB\ volume info [all|<VOLNAME>] \fR
+Display information about all volumes, or the specified volume.
+.TP
+\fB\ volume list \fR
+List the available volumes.
+.TP
+\fB\ volume create <NEW-VOLNAME> [stripe <COUNT>] [replica <COUNT>] [transport <tcp|rdma|tcp,rdma>] <NEW-BRICK> ... \fR
+Create a new volume of the specified type using the specified bricks and transport type (the default transport type is tcp).
+To create a volume with both transports (tcp and rdma), give 'transport tcp,rdma' as an option.
+.TP
+\fB\ volume delete <VOLNAME> \fR
+Delete the specified volume.
+.TP
+\fB\ volume start <VOLNAME> \fR
+Start the specified volume.
+.TP
+\fB\ volume stop <VOLNAME> [force] \fR
+Stop the specified volume.
+.TP
+\fB\ volume set <VOLNAME> <OPTION> <PARAMETER> [<OPTION> <PARAMETER>] ... \fR
+Set the given volume options.
+.TP
+\fB\ volume reset [<OPTION>] [force] \fR
+Reset all or the given volume options.
+.TP
+\fB\ volume help \fR
+Display help for the volume command.
+
+.SS "Brick Commands"
+.PP
+.TP
+\fB\ volume add-brick <VOLNAME> [<stripe|replica> <COUNT>] <NEW-BRICK> ... \fR
+Add the specified bricks to the specified volume.
+.TP
+\fB\ volume remove-brick <VOLNAME> [replica <COUNT>] <BRICK> ... {start|stop|status|commit|force} \fR
+Remove the specified bricks from the specified volume.
+.TP
+\fB\ volume rebalance <VOLNAME> [fix-layout] {start|stop|status} [force] \fR
+Performs rebalance operation on the volume.
+.TP
+\fB\ volume replace-brick <VOLNAME> (<BRICK> <NEW-BRICK>) start|pause|abort|status|commit \fR
+Replace the specified brick.
+
+.SS "Quota Commands"
+.PP
+.TP
+\fB\ volume quota <VOLNAME> {enable|disable} \fR
+Enable or disable quota on a volume
+.TP
+\fB\ volume quota <VOLNAME> limit-usage <PATH> <VALUE> \fR
+Set quoata on PATH to VALUE
+.TP
+\fB\ volume quota <VOLNAME> remove <PATH> \fR
+Remove quota on path
+.TP
+\fB\ volume quota <VOLNAME> list \fR
+List the set quotas
+
+.SS "Volume Monitoring Commands"
+.PP
+.TP
+\fB\ volume profile <VOLNAME> {start|stop} \fR
+Start or stop profiling a volume.
+.TP
+\fB\ volume profile <VOLNAME> info [nfs] \fR
+Show the gathered profiling information for the volume.
+.TP
+\fB\ volume top <VOLNAME> {open|read|write|opendir|readdir} [nfs] [brick <BRICK>] [list-cnt <COUNT>] \fR
+Display the counts of specified operation in the volume.
+.TP
+\fB\ volume top <VOLNAME> {read-perf|write-perf} [nfs | {bs <SIZE} count <COUNT>] [brick <BRICK>] [list-cnt <COUNT>]\fR
+Display the throughput of the volume.
+.TP
+\fB\ volume status [all| {<VOLNAME> [nfs|shd|<BRICK>]] [detail|clients|mem|inode|fd|callpool] \fR
+Display the present status of the processes of specified volume.
+
+.SS "Other Volume Commands"
+.PP
+.TP
+\fB\ volume geo-replication [<VOLNAME>] [<SLAVE-URL>] {start|stop|config|status|log-rotate} [options...] \fR
+Geo-replication operations
+.TP
+\fB\ volume heal <VOLNAME> [{full | info {healed|heal-failed|split-brain}}] \fR
+Self-heal commands
+.TP
+\fB\ volume clear-locks <VOLNAME> <PATH> kind {blocked|granted|all} {inode <RANGE>|entry <BASENAME>|posix <RANGE>} \fR
+Clear locks held on path in the volume
+.TP
+\fB\ volume statedump <VOLNAME> [nfs] [all|mem|iobuf|callpool|priv|fd|inode|history]
+Perform a statedump of the brick or nfs-server processos of the volume
+.TP
+\fB\ volume sync <HOSTNAME> [all|<VOLNAME>] \fR
+Sync volume information from specified peer
+
+.SS "Log Commands"
+.TP
+\fB\ volume log rotate <VOLNAME> [BRICK] \fB
+Rotate the log file for corresponding volume/brick.
+.SS "Peer Commands"
+.TP
+\fB\ peer probe <HOSTNAME> \fR
+Probe the specified peer.
+.TP
+\fB\ peer detach <HOSTNAME> \fR
+Detach the specified peer.
+.TP
+\fB\ peer status \fR
+Display the status of peers.
+.TP
+\fB\ peer help \fR
+Display help for the peer command.
+.SS "Other Commands"
+.TP
+\fB\ help \fR
+Display the command options.
+.TP
+\fB\ quit \fR
+Exit the gluster command line interface.
+
+.SH FILES
+/etc/glusterd/*
+.SH SEE ALSO
+.nf
+\fBfusermount\fR(1), \fBmount.glusterfs\fR(8), \fBglusterfs\fR(8), \fBglusterd\fR(8)
+\fR
+.fi
+.SH COPYRIGHT
+.nf
+Copyright(c) 2006-2011  Gluster, Inc.  <http://www.gluster.com>

@@ -1,4 +1,4 @@
 glusterCopy
 ===========
 
-Copy of GlusterFS
+Copy of GlusterFS v3.3.1
